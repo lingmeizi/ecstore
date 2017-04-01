@@ -1,0 +1,51 @@
+<form method="POST" action="index.php?app=b2c&ctl=admin_member_back&act=audit" class="tableform" id="form_member_back">
+ <{input type='hidden' name='back_id' value=$back.back_id}>
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" >
+    <tr>
+      <th><em class="c-red">*</em><{t}>实际支付金额：<{/t}></th>
+      <td><{input type="number" name="pay_money" size="20" vtype="required" value=$back.pay_money}></td>
+    </tr>
+   
+</table>
+ <div class="table-action">
+      <{button type="button" label=$___b2c="保存"|t:'b2c' id="member_back-form-submit"}>
+</div>
+</div>
+</form>
+<script>
+(function(){
+	var _form = $('form_member_back');
+	var btn =$('member_back-form-submit');
+	var finder = finderGroup['<{$env.get._finder.finder_id}>'];
+
+	_form.store('target',{
+		onSuccess:function(response){
+			var hash_res_obj = JSON.decode(response);
+
+			if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+			{
+				try{
+					var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+				}catch(e){}
+
+				if(_dialogIns)
+				{
+					_dialogIns.close();
+					window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+				}
+			}
+
+		}
+	});
+
+	    btn.addEvent('click',function(){
+		    _form.fireEvent('submit',{stop:$empty});
+		});
+
+})();
+
+
+</script>
+
+

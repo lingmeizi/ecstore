@@ -1,0 +1,53 @@
+<!-- 会员中心主内容区 -->
+<div class="page-article">
+  <!-- 个人信息 -->
+  <div id="member_information" class="member-information">
+    <div class="member-title">
+      <h2><{t}>我的分享<{/t}></h2>
+    </div>
+    </br>
+    <div class="member-mod" style="padding-bottom: 30px">
+      分享地址：<{$share_url}>
+      <span class="share pop-wrapper">
+        <div class="jiathis_style_24x24">
+          <span class="jiathis_txt" style="font-size:13px;">分享到：</span>
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+    </span>
+    </div>
+    <div class="member-mod">
+      
+      <img src="http://s.jiathis.com/qrcode.php?url=<{$share_wx_url}>" />
+    </div>
+  </div>
+</div>
+
+<script  "text/javascript">
+var jiathis_config = {
+  url: ""
+}
+<!-- 重新定义微信分享的url -->
+$$(".jiathis_button_weixin").addEvents({'click':function(e){
+  jiathis_config = {
+    url:"<{$share_wx_url}>"
+  }
+}}
+);
+$$(".jiathis_style_24x24 a[class!=jiathis_button_weixin]").addEvents({'click':function(e){
+  jiathis_config = {
+    url:"<{$share_url}>"
+  }
+}}
+);
+$$(".jiathis_style_24x24 a[class!=jiathis_button_weixin]").addEvents({'mouseover':function(e){
+  jiathis_config = {
+     url:"<{$share_url}>"
+  }
+}}
+);
+</script>
+<!-- JiaThis Button END -->
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>

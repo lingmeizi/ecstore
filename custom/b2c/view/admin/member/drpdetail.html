@@ -1,0 +1,12 @@
+
+<div class="tableform clearfix">
+   <div>身份证信息：</div>
+  <div class="fl" style="padding-left: 20px;">
+     <{if $image_id}>
+        <input  type="hidden" name="photoimg" id="card_img" value="<{$image_id|storager:'s'}>" class="aaaaa" />
+        <a href="<{$image_id|storager:''}>" target="_blank">
+        <img src="<{$image_id|storager:'s'}>" width="88" height="88" style="padding-top:10px;"/></a>
+      <{/if}>
+    <div>
+  </div>
+  </div></div>

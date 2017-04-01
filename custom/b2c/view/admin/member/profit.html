@@ -1,0 +1,91 @@
+<{if !$_is_singlepage}>
+
+<form method="POST" action="index.php?app=b2c&ctl=admin_member_profit&act=save" class="tableform" id="form_member_profit">
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" >
+    <tr>
+      <th><em class="c-red">*</em><{t}>佣金规则名称：<{/t}></th>
+      <td><{input type="text" name="profit_name" size="20" vtype="required" value=$profit.profit_name}></td>
+    </tr>
+    <tr>
+      <th><em class="c-red">*</em><{t}>佣金比例：<{/t}></th>
+      <{if $profit.member_profit_id}><{input type='hidden' name='member_profit_id' value=$profit.member_profit_id}><{/if}>
+      <td><{input type="text" name="profit1" size="20" vtype="required" value=$profit.profit1}><span class="notice-inline"><{t}>佣金比例0.1表示为10%，填写小数<{/t}></span></td>
+    </tr>
+    <tr>
+      <th><em class="c-red">*</em><{t}>折扣比例：<{/t}></th>
+      <td><{input type="text" name="discount" size="20" vtype="required" value=$profit.discount}><span class="notice-inline"><{t}>佣金比例0.1表示为10%，填写小数<{/t}></span></td>
+    </tr>
+     <tr>
+        <th><em><font color="red">*</font></em><{t}>生效时间：<{/t}></th>
+        <td>
+            <{input type="time" value=$profit.start_time vtype='required' name="start_time" style="width:65px" maxlength="30" }>
+        </td>
+    </tr>
+    <tr>
+        <th><em><font color="red">*</font></em><{t}>失效时间：<{/t}></th>
+        <td>
+            <{input type="time" value=$profit.end_time vtype='required' name="end_time" style="width:65px" maxlength="30" }>
+        </td>
+    </tr>
+    <tr>
+      <th><{t}>商品标签：<{/t}></th>
+      <td>
+     <select name="tag_id" id="tag_id">
+      <option value="">请选择</option>
+      <{foreach from=$tag key=key item=val}>
+      <option value="<{$val.tag_id}>" <{if $val.tag_id==$profit.tag_id}>selected<{/if}> ><{$val.tag_name}></option>
+      <{/foreach}>
+     </select>
+      </td>
+    </tr>
+</table>
+
+</div>
+</form>
+<{area inject='.mainFoot'}>
+     <div class="table-action">
+	<{button type="button" label=$___b2c="保存"|t:'b2c' id="member_profit-form-submit"}>
+</div>
+<{/area}>
+
+
+
+
+
+<script>
+(function(){
+	var _form = $('form_member_profit');
+	var btn =$('member_profit-form-submit');
+	var finder = finderGroup['<{$env.get._finder.finder_id}>'];
+
+	_form.store('target',{
+		onSuccess:function(response){
+			var hash_res_obj = JSON.decode(response);
+
+			if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+			{
+				try{
+					var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+				}catch(e){}
+
+				if(_dialogIns)
+				{
+					_dialogIns.close();
+					window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+				}
+			}
+
+		}
+	});
+
+	    btn.addEvent('click',function(){
+		    _form.fireEvent('submit',{stop:$empty});
+		});
+
+})();
+
+
+</script>
+
+<{/if}>

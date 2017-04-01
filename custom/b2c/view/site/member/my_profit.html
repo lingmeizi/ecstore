@@ -1,0 +1,39 @@
+<!-- 会员中心主内容区 -->
+<div class="page-article">
+  <!-- 我的评论 -->
+  <div id="member_aftersales" class="member-aftersales">
+   <div class="member-mod member-aftersales-list">
+    <table class="member-grid">
+    <thead>
+      <tr>
+        <th><{t}>订单编号<{/t}></th>
+        <th><{t}>订单状态<{/t}></th>
+        <th><{t}>订单时间<{/t}></th>
+        <th><{t}>购买用户<{/t}></th>
+        <th><{t}>分成金额<{/t}></th>
+        <th><{t}>状态<{/t}></th>
+      </tr>
+    </thead>
+     <{if $my_profit}>
+    <{foreach from=$my_profit item=order name=order key="key"}>
+    <tbody class="<{if $smarty.foreach.orders.iteration == 1}> first<{/if}>">
+      <tr>
+        <td class="status"><{$order.order_id}></td>
+        <td class="status"><{$order.order_status}></td>
+        <td class="status"><{$order.change_time}></td>
+        <td class="status"><{$order.username}></td>
+        <td class="status"><{$order.money|cur_odr:$order.currency:false:true}></td>
+        <td class="status"><{$order.status}></td>
+      </tr>
+    </tbody>
+    <{/foreach}>
+    <{else}>
+    <tbody class="first">
+      <tr class="no-information"><td colspan="6">暂无佣金</td></tr>
+    </tbody>
+    <{/if}>
+  </table>
+    </div>
+    <{pagers data=$pager}>
+  </div>
+</div>

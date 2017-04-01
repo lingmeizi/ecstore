@@ -1,0 +1,46 @@
+<!-- 会员中心主内容区 -->
+<div class="page-article">
+  <!-- 我的订单 -->
+  <div class="member-title">
+    <h2>佣金提取</h2>
+  </div>
+  <div class="member-tabs">
+    <span>总销售额：<{$sale_money_order|cur_odr:$order.currency:false:true}></span>
+    <span style="padding-left: 30px">剩余佣金：<{$sale_money|cur_odr:$order.currency:false:true}></span>
+    <span style="padding-left: 50px">待审核金额：<{$noaudit_money|cur_odr:$order.currency:false:true}></span>
+    <span style="padding-left: 75px">可提取佣金：<{$sur_money|cur_odr:$order.currency:false:true}></span>
+  </div>
+   <div id="member_orders" class="member-orders member-mod">
+  <form action="<{link app=b2c ctl='site_member' act='account_apply'}>" id="profit-form" method="post">
+   <input type="hidden" name="sur_money" value="<{$sur_money}>">
+  <ul  style="padding-top: 15px">
+    <li class="form-item">
+    <label ><em class="warn">*</em>提现金额：</label>
+    <span><{input type="text" name="amount"  vtype="required"}></span>
+    </li>
+     <li class="form-item">
+        <label style="text-align: center" ><em class="warn">*</em>收款信息：</label>
+        <span><{input type="textarea" class="inputstyle" name="bank_info" style=" width:50%" rows=4}></span>
+    </li>
+    <{if  $valideCode == 'true'}>
+    <li class="form-item action-verifycode" >
+      <label  class="form-label"><em class="warn">*</em>验证码：</label>
+      <span class="form-act">
+        <{input type="vcode" name="signupverifycode" class="verify-input" placeholder="填写验证码" data-caution="请正确填写验证码" key='LOGINVCODE' a_class="lnklike"}>
+      </span>
+    </li>
+   <{/if}>
+    <li class="form-item">
+     <span style="padding-left: 200px"> <{button type="submit" onclick="setdis()"  id="form-submit"   label="提交" rel="_request"}></span>
+     <!--  <span style="padding-left: 30px"> <{button type="reset"   label="重置" rel="_request"}></span>-->
+     </li>
+    <li class="form-item">
+        <label style="text-align: center" ><em class="warn">*</em>说明：</label>
+        <span>如果是银行卡：需要填写开户所在地，开户银行，开户姓名和卡号：例如珠海建设银行 张一山 XXXXX;</br>
+              如果是支付宝：直接填写号码以及姓名即可,例如 张一山 13234543212
+        </span>
+    </li>
+  </ul>
+</form>
+  </div>
+ </div>

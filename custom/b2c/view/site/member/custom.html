@@ -1,0 +1,77 @@
+<!-- 会员中心主内容区 -->
+<div class="page-article">
+  <!-- 我的客户 -->
+  <div class="member-title">
+    <h2>我的客户</h2>
+  </div>
+  <div id="member_custom" class="member-orders member-mod">
+    <table class="member-grid">
+    <thead>
+      <tr>
+        <th><{t}>用户名<{/t}></th>
+        <th><{t}>邮箱<{/t}></th>
+        <th><{t}>手机<{/t}></th>
+        <th><{t}>注册时间<{/t}></th>
+      </tr>
+    </thead>
+     <{if $my_members}>
+    <{foreach from=$my_members item=my_member name=my_members key="key"}>
+    <tbody class="<{if $smarty.foreach.orders.iteration == 1}> first<{/if}>">
+      <tr>
+        <td class="status" width="28%"><{$my_member.username}></td>
+        <td class="status"><{$my_member.email}></td>
+        <td class="status"><{$my_member.mobile}></td>
+        <td class="status"><{$my_member.regtime}></td>
+      </tr>
+    </tbody>
+    <{/foreach}>
+    <{else}>
+    <tbody class="first">
+      <tr class="no-information"><td colspan="6">暂无客户</td></tr>
+    </tbody>
+    <{/if}>
+  </table>
+  </div>
+  <{pagers data=$pager}>
+</div>
+
+<{if $orders}>
+<script>
+// Module = new Module('member', ['orders']);
+$('member_orders').addEvents({
+    'click:relay(.action-view-goods)':function (e) {
+        var parent = this.getParent('tbody');
+        var actions = parent.getElement('.actions');
+        if(parent.hasClass('fold')) {
+            actions.set('rowspan', 2);
+            parent.removeClass('fold').addClass('unfold');
+        }
+        else {
+            actions.set('rowspan', 1);
+            parent.removeClass('unfold').addClass('fold');
+        }
+    }
+});
+
+window.addEvent('domready', function(){
+    var tipsHandle = $$('[data-tips]');
+    if(tipsHandle.length) {
+        var tips = new Tips({
+            type: 'tooltip',
+            'class': 'xtooltip',
+            arrow: false,
+            offset:{y:-1},
+            position: 'bl'
+        });
+        tipsHandle.addEvents({
+            'mouseenter': function(){
+                tips.show(null, this);
+            },
+            'mouseleave': function(){
+                tips.hide();
+            }
+        });
+    }
+});
+</script>
+<{/if}>

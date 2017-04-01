@@ -1,0 +1,44 @@
+<!-- 会员中心主内容区 -->
+<div class="page-article">
+  <!-- 我的订单 -->
+  <div class="member-title">
+    <h2>我的订单</h2>
+  </div>
+  <div id="member_order_list" class="member-orders member-mod">
+    <table class="member-grid">
+    <thead>
+      <tr>
+        <th><{t}>订单编号<{/t}></th>
+        <th><{t}>订单状态<{/t}></th>
+        <th><{t}>订单时间<{/t}></th>
+        <th><{t}>购买人<{/t}></th>
+        <th><{t}>购买金额<{/t}></th>
+        <th><{t}>佣金比例<{/t}></th>
+        <th><{t}>佣金总额<{/t}></th>
+        <th><{t}>是否分成<{/t}></th>
+      </tr>
+    </thead>
+     <{if $order_lists}>
+    <{foreach from=$order_lists item=order name=order key="key"}>
+    <tbody class="<{if $smarty.foreach.orders.iteration == 1}> first<{/if}>">
+      <tr>
+        <td class="status"><{$order.order_id}></td>
+        <td class="status"><{$order.pay_status}></td>
+        <td class="status"><{$order.createtime}></td>
+        <td class="status"><{$order.username}></td>
+        <td class="status"><{$order.final_amount|cur_odr:$order.currency:false:true}></td>
+        <td class="status"><{$order.profit1}></td>
+        <td class="status"><{$order.salemoney|cur_odr:$order.currency:false:true}></td>
+        <td class="status" ><{$order.salestatus}></td>
+      </tr>
+    </tbody>
+    <{/foreach}>
+    <{else}>
+    <tbody class="first">
+      <tr class="no-information"><td colspan="6">暂无订单</td></tr>
+    </tbody>
+    <{/if}>
+  </table>
+  </div>
+  <{pagers data=$pager}>
+</div>

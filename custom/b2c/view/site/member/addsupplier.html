@@ -1,0 +1,296 @@
+<!-- 会员中心主内容区 -->
+<{script src="jquery.js" app=b2c pdir="js"}>
+<{script src="jquery.form.js" app=b2c pdir="js"}>
+<{script src="imageupload.js" app=b2c pdir="js"}>
+<div class="page-article">
+  <!-- 我的评论 -->
+  <div id="member_aftersales" class="member-aftersales">
+    <div class="member-tabs">
+      <a href="#" id="headb" class="active" onclick="_show1()"><em><{t}>基本信息<{/t}></em></a>
+      <a href="#" id="heads"   onclick="_show4()"><em><{t}>运营讯息<{/t}></em></a>
+      <a href="#" id="headwap" onclick="_show2()" ><em>有店铺分销商问卷</em></a>
+      <a href="#" id="headst"  onclick="_show3()"><em>无店铺分销商问卷</em></a>
+    </div>
+ <form action="<{link app=b2c ctl='site_member' act='appsupplier'}>" method="post" id="imageform" enctype="multipart/form-data" class="signupin-content"  onsubmit="return checkAddForm();"> 
+    <input type="hidden" name="member_drp_id" value="<{$mem.member_drp_id}>">
+    <div class="member-mod" >
+        <div id="basic" style="padding-top: 20px">
+           <ul>
+            <li class="form-item">
+            <label for="" class="form-label"><em class="warn"></em> 申请状态：</label>
+            <{$mem.appstatus}>
+            </li>
+           <li class="form-item">
+                <label class="form-label"><em class="warn">*</em>有无店铺：</label>
+                <{input type="select" id="is_store" name="is_store" style="width:40%"   options=$isStoreList   vtype="required" value="{$mem.is_store}"}>
+               
+            </li>
+           <li class="form-item"  >
+               <label class="form-label"><em class="warn">*</em>姓名：</label>
+               <span><{input type="text" name="real_name"  vtype="required" value="{$mem.real_name}" style="width:40%" }></span>
+           </li>
+           <li class="form-item" >
+               <label class="form-label"><em class="warn">*</em>性别：</label>
+               <span><{input type="gender" class="x-check" name='gender' value=$mem.gender  }></span>
+           </li>
+            <li class="form-item">
+               <label class="form-label"><em class="warn">*</em>出生日期：</label>
+               <span> <{input type="text" name="birthday"  vtype="date" value="{$mem.birthday}" style="width:40%" }>注:请输入日期格式yyyy-mm-dd</span>
+           </li>
+            <li class="form-item">
+               <label class="form-label" ><em class="warn">*</em>电话号码：</label>
+               <span><{input type="number" id="tel"  name="tel"  vtype="required" value="{$mem.tel}" style="width:40%" }></span>
+           </li>
+            <li class="form-item">
+               <label class="form-label" ><em class="warn">*</em>Email：</label>
+               <{input type="text" name="email"  vtype="required&&email" value="{$mem.email}" style="width:40%" }>
+           </li>
+            <li class="form-item">
+               <label class="form-label"><em class="warn">*</em>QQ：</label>
+               <span><{input type="number" name="qq"  value="{$mem.qq}" vtype="required" style="width:40%"}></span>
+           </li>
+           <li class="form-item" >
+               <label class="form-label"><em class="warn">*</em>微信：</label>
+               <span><{input type="text" name="weixin" value="{$mem.weixin}" vtype="required" style="width:40%" }></span>
+           </li>
+           <li class="form-item">
+               <label class="form-label"><em class="warn">*</em>身份证号码：</label>
+               <span><{input type="text" id="card" name="card" value="{$mem.card}" vtype="required" style="width:40%"}></span>
+           </li>
+           <li class="form-item">
+               <label class="form-label"><em class="warn">*</em>地址：</label>
+               <span><{input type="textarea" class="inputstyle" name="address" vtype="required"  style=" width:80%" row=2 value="{$mem.address}"}></span>
+           </li>
+           <li>
+                <label  class="form-label"><em class="warn">*</em> 上传附件：</label>
+                <input type="file" name="photoimg"  id="img_url"    /> 注:上传身份证附件
+           </li>
+             
+            <span style="padding-top:10px;">
+              <{if $mem.image_id}>
+                <input  type="hidden" name="photoimg" id="card_img" value="<{$mem.image_id|storager:'s'}>" class="aaaaa" />
+                <a href="<{$mem.image_id|storager:''}>">
+                <img src="<{$mem.image_id|storager:'s'}>" width="88" height="88" style="padding-top:10px;"/></a>
+              <{/if}>
+            </span>
+            
+            <li class="form-item" >
+            <label for="" class="form-label"></label>
+            <span class="form-act">
+              <input type="checkbox" name="license" id="" class="x-check" vtype="onerequired" data-caution="<{t}>请选择同意<{/t}>" checked="checked">
+              <label for="" class="form-sub-label"> <{t}>我已阅读并同意<a href="<{link app=b2c ctl=site_member act=license }>" class="lnklike" target="_blank"><{t}>经销商须知<{/t}></a><{/t}> </label>
+
+            </span>
+        </li>
+        <li class="form-item">
+            
+            <{if $mem.appstatus=='已提交' ||  $mem.appstatus=='已拒绝'}>
+            <span style="padding-left: 200px"> <{button type="submit"   label="重新提交" rel="_request"}></span>
+            <{else}>
+            <span style="padding-left: 200px"> <{button type="submit"   label="提交" rel="_request"}></span>
+           <{/if}>
+        </li>
+      </ul>
+    </div>
+    <div   class="member-mod" id="business" style="display: none;padding-top: 20px">
+    <ul>
+      <li class="form-item" >
+           <label class="form-label"><em class="warn">*</em>网店/SNS：</label>
+           <span><{input type="text" id="social_networks" name="social_networks"  value="{$mem.social_networks}" vtype="required" style="width:40%"}>例：微博.微信.淘宝.JD等</span>
+       </li>
+       <li class="form-item" >
+           <label class="form-label"><em class="warn">*</em>店铺连接：</label>
+           <span><{input type="text" id="networks_url" name="networks_url"  value="{$mem.networks_url}" vtype="required" style="width:40%"}></span>
+       </li>
+        <li class="form-item">
+           <label class="form-label"><em class="warn">*</em>运营年数：</label>
+           <span><{input type="text" id="oper_years"  name="oper_years" value="{$mem.oper_years}" vtype="unsignedint" style="width:40%" }></span>
+       </li>
+        <li class="form-item">
+                <label class="form-label"><em class="warn">*</em>有无实体店：</label>
+                <span><{input type="bool" id='is_true_store' class="inputstyle" name="is_true_store" style="padding-left:40px; width:2%" vtype="required" options=$typeList value="{$mem.is_true_store}"  onchange="storeChange(this)"      }></span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                注:如果选择是，以下三项为必填
+        </li>
+        <li class="form-item">
+           <label class="form-label"><em class="warn"></em>店铺名：</label>
+           <span><{input type="text" class="inputstyle" name="tstroe_info" id="tstroe_info"   style=" width:40%" value="{$mem.tstroe_info}" }>注：实体店名字</span>
+       </li>
+       <li class="form-item">
+           <label class="form-label"><em class="warn"></em>所在地：</label>
+           <span><{input type="textarea" class="inputstyle" name="store_address" id="store_address"   style=" width:80%" value="{$mem.store_address}" }>注：实体店所在地</span>
+       </li>
+        <li class="form-item">
+           <label class="form-label"><em class="warn"></em>运营年数：</label>
+           <span><{input type="number" name="toper_years" id="toper_years" value="{$mem.toper_years}" style="width:40%"}>注：实体店运营年数</span>
+       </li>
+    </ul>
+    </div>
+     <div  class="member-mod" id="wapshop" style="display: none;padding-top: 20px">
+     <ul>
+        <li class="form-item">
+           <label class="form-label"><em class="warn"></em>店铺类别：</label>
+           <span><{input type="text"  id="store_type" name="store_type" style=" width:40%" value="{$mem.store_type}"}>例：个护美妆，食品，营养保健，母婴用品</span>
+       </li>
+       <li class="form-item">
+           <label class="form-label"><em class="warn"></em>商品种类数：</label>
+           <span><{input type="text"  id="goods_type_count" name="goods_type_count"  value="{$mem.goods_type_count}" style="width:10%"}></span>
+       </li>
+       <li class="form-item" >
+           <label class="form-label"><em class="warn"></em>所属国家：</label>
+           <span><{input type="text" id="country" name="country"  value="{$mem.country}" style="width:40%"}></span>
+       </li>
+       <li class="form-item">
+           <label class="form-label"><em class="warn"></em>每月销售额：</label>
+           <span>约<{input type="number" id="sale_money" name="sale_money" value="{$mem.sale_money}" style="width:10%"}>万人民币</span>
+       </li>
+    </ul>
+     </div>
+    <div id="shitishop"   class="member-mod"  style="display: none;padding-top: 20px">
+       <ul>
+       <li class="form-item" >
+           <label class="form-label"><em class="warn"></em>粉丝数：</label>
+           <span><{input type="number" id="fans_count" name="fans_count" value="{$mem.fans_count}" style="width:40%" }></span>
+       </li>
+       <li class="form-item">
+           <label class="form-label"><em class="warn"></em>平均得赞数：</label>
+           <span><{input type="number" id="zan_count" name="zan_count" value="{$mem.zan_count}" style="width:40%" }></span>
+       </li>
+        <li class="form-item">
+           <label class="form-label"><em class="warn"></em>周发文频率：</label>
+           <span><{input type="text" id="frequency" name="frequency"  value="{$mem.frequency}" style="width:40%"}></span>
+       </li>
+    </ul>
+    </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script type="text/javascript">
+     function _show1() {
+		$("#basic").show();
+                $("#wapshop").hide();
+                $("#shitishop").hide();
+                $("#business").hide();
+//                $("basic").style.visibility="visible";
+//                $("wapshop").style.visibility="hidden";
+//                $("shitishop").style.visibility="hidden";
+//                $("business").style.visibility="hidden";
+                $('#headb').addClass('active');
+                $('#headwap').removeClass('active');
+                $('#headst').removeClass('active');
+                $('#heads').removeClass('active');
+	}
+     function _show2() {
+         //只有点击了有网店才可以点击，然后设置所有为必填项
+		$("#basic").hide();
+                $("#wapshop").show();
+                $("#shitishop").hide();
+                $("#business").hide();
+                $("#headwap").class
+                $('#headwap').addClass('active');
+                $('#headb').removeClass('active');
+                $('#headst').removeClass('active');
+                $('#heads').removeClass('active');
+                
+	 }
+     function _show3() {
+         //只有点击了有实体店才可以点击，然后设置相关为必填项
+		$("#basic").hide();
+                $("#wapshop").hide();
+                $("#shitishop").show();
+                $("#business").hide();
+                $('#headb').removeClass('active');
+                $('#headwap').removeClass('active');
+                $('#headst').addClass('active');
+                $('#heads').removeClass('active');
+                
+	 }
+      function _show4() {
+         //只有点击了有实体店才可以点击，然后设置相关为必填项
+		$("#basic").hide();
+                $("#wapshop").hide();
+                $("#shitishop").hide();
+                $("#business").show();
+                $('#headb').removeClass('active');
+                $('#headwap').removeClass('active');
+                $('#headst').removeClass('active');
+                $('#heads').addClass('active');
+                
+	 }
+         
+   function checkAddForm()
+    {
+      if(($('#img_url').val()=="")&&($('#card_img').val()==""))
+           {
+               alert("请上传身份证信息！");
+               return false;
+           }
+        if(!(/^1[34578]\d{9}$/.test($('#tel').val()))){ 
+             alert("手机号码有误，请重填!");  
+            return false; 
+        }    
+        
+        if(!(/(^\d{15}$)|(^\d{17}(\d|X)$)/.test($('#card').val()))){ 
+            alert("身份证号码有误，请重填");  
+            return false; 
+        }    
+       //判断那三个为必填项
+      var social_networks=$('#social_networks').val();
+      var networks_url= $('#networks_url').val(); 
+      var oper_years= $('#oper_years').val();
+      if(social_networks=="")
+      {
+          alert("网店/SNS信息不能为空，请填写！");
+          return false;
+      }else if(networks_url="")
+      {
+          alert("店铺连接不能为空，请填写！");
+          return false;
+      }else if(oper_years=="")
+      {
+          alert("运营年数不能为空，请填写！");
+          return false;
+      }
+      //如果是实体店铺，都不能为空
+       var chkRadio = $('input:radio[name="is_true_store"]:checked').val();
+       if(chkRadio=="true")
+       {
+            var tstroe_info=$('#tstroe_info').val();
+            var store_address=$('#store_address').val();
+            var toper_years=$('#toper_years').val();
+            if(tstroe_info=="")
+            {
+                alert("实体店铺名不能为空，请填写！");
+                return false;
+            }else if(store_address=="")
+            {
+                alert("实体店铺所在地不能为空，请填写！");
+                return false;
+            }else if(toper_years=="")
+            {
+                alert("实体店铺运营年数不能为空，请填写！");
+                return false;
+            }
+       }
+       
+       if($('#is_store').val()==1)
+       { 
+           if(($('#store_type').val()=="")||($('#goods_type_count').val()=="")||($('#country').val()=="")||($('#sale_money').val()==""))
+           {
+               alert("有店铺分销商问卷所有信息不能为空，请填写！");
+               return false;
+           }
+       }else{
+           if(($('#fans_count').val()=="")||($('#zan_count').val()=="")||($('#frequency').val()==""))
+           {
+               alert("无店铺分销商问卷所有信息不能为空，请填写！");
+               return false;
+           }
+       }
+       jQuery.noConflict(); //释放jquery中$定义，并直接使用jQuery代替平时的$
+       return true;
+    }
+</script>

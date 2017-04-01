@@ -1,0 +1,33 @@
+<div class="full-screen">
+    <header>
+    <div class="a-bar">
+        <a href="javascript:history.back()" class="a-back">
+            <i class="arr left"></i>
+            返回
+        </a>
+        <div class="a-name">
+           我的佣金
+        </div>
+    </div>
+    </header>
+    <div class="address">
+        <{if !$my_profit}>
+            <div>暂无佣金</div>
+        <{else if}>
+              <{foreach from=$my_profit item=my_profit name=my_profit key="key"}>
+            <div class="item">
+                <p>
+                    订单编号：<{$my_profit.order_id|escape:'html'}> <br />
+                    订单状态：<{$my_profit.order_status}><br />
+                    订单时间：<{$my_profit.change_time|escape:'html'}><br />
+                    购买用户：<{$my_profit.username|escape:'html'}> <br />
+                    分成金额：<{$my_profit.money|escape:'html'}><br />
+                    状态：<{$my_profit.status}>
+                </p>
+                <i class="arr right"></i>
+            </div>
+            <{/foreach}>
+        <{/if}>
+    </div>
+</div>
+<{wap_pagers data=$pager}>

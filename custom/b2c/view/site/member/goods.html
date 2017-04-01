@@ -1,0 +1,81 @@
+<!-- 会员中心主内容区 -->
+<div class="page-article">
+  <!-- 我的评论 -->
+  <div id="member_aftersales" class="member-aftersales">
+ <{if $change_type == '0'}>
+    <div class="member-tabs">
+      <a href="<{link app=b2c ctl=site_member act=my_profit arg1='0'}>" class="active"><em><{t}>佣金明细<{/t}></em></a>
+      <a href="<{link app=b2c ctl=site_member act=my_profit arg1='1'}>"  ><em><{t}>提现管理<{/t}></em></a>
+    </div>
+   <div class="member-mod member-aftersales-list">
+    <table class="member-grid">
+    <thead>
+      <tr>
+        <th><{t}>订单编号<{/t}></th>
+        <th><{t}>订单状态<{/t}></th>
+        <th><{t}>订单时间<{/t}></th>
+        <th><{t}>购买用户<{/t}></th>
+        <th><{t}>佣金明细<{/t}></th>
+        <th><{t}>分成金额<{/t}></th>
+        <th><{t}>状态<{/t}></th>
+      </tr>
+    </thead>
+     <{if $my_profit}>
+    <{foreach from=$my_profit item=order name=order key="key"}>
+    <tbody class="<{if $smarty.foreach.orders.iteration == 1}> first<{/if}>">
+      <tr>
+        <td class="status"><{$order.order_id}></td>
+        <td class="status"><{$order.order_status}></td>
+        <td class="status"><{$order.change_time}></td>
+        <td class="status"><{$order.username}></td>
+        <td class="status"><{$order.change_desc}></td>
+        <td class="status"><{$order.money}></td>
+        <td class="status"><{$order.status}></td>
+      </tr>
+    </tbody>
+    <{/foreach}>
+    <{else}>
+    <tbody class="first">
+      <tr class="no-information"><td colspan="6">暂无佣金</td></tr>
+    </tbody>
+    <{/if}>
+  </table>
+   <{else}>
+     <div class="member-tabs">
+      <a href="<{link app=b2c ctl=site_member act=my_profit arg1='0'}>" ><em><{t}>佣金明细<{/t}></em></a>
+      <a href="<{link app=b2c ctl=site_member act=my_profit arg1='1'}>" class="active" ><em><{t}>提现管理<{/t}></em></a>
+    </div>
+   <div class="member-mod member-aftersales-list">
+     <table class="member-grid">
+    <thead>
+      <tr>
+        <th><{t}>收款信息<{/t}></th>
+        <th><{t}>申请时间<{/t}></th>
+        <th><{t}>申请金额<{/t}></th>
+        <th><{t}>状态<{/t}></th>
+      </tr>
+    </thead>
+     <{if $my_profit}>
+    <{foreach from=$my_profit item=order name=order key="key"}>
+    <tbody class="<{if $smarty.foreach.orders.iteration == 1}> first<{/if}>">
+      <tr>
+        <td class="status"><{$order.bank_info}></td>
+        <td class="status"><{$order.change_time}></td>
+        <td class="status"><{$order.money}></td>
+        <td class="status"><{$order.status}></td>
+      </tr>
+    </tbody>
+    <{/foreach}>
+    <{else}>
+    <tbody class="first">
+      <tr class="no-information"><td colspan="6">暂无申请</td></tr>
+    </tbody>
+    <{/if}>
+  </table>
+  <{/if}>
+        
+        
+    </div>
+    <{pagers data=$pager}>
+  </div>
+</div>

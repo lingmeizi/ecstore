@@ -1,0 +1,32 @@
+<!-- 会员中心主内容区 -->
+<{script src="jquery.js" app=b2c pdir="js"}>
+<{script src="jquery.form.js" app=b2c pdir="js"}>
+<{script src="imageupload.js" app=b2c pdir="js"}>
+ <form action="<{link app=b2c ctl='site_member' act='appsupplier'}>" method="post" id="imageform" enctype="multipart/form-data" class="signupin-content"  onsubmit="return checkAddForm();"> 
+    <input type="hidden" name="member_drp_id" value="<{$mem.member_drp_id}>">
+    <div class="member-mod" >
+           <ul>
+           <li>
+                <label  class="form-label"><em class="warn">*</em> 上传附件：</label>
+                <input type="file" name="photoimg"  id="img_url"    /> 注:上传身份证附件
+           </li>
+            <span style="padding-top:10px;">
+              <{if $mem.image_id}>
+                <input  type="hidden" name="photoimg" id="card_img" value="<{$mem.image_id|storager:'s'}>" class="aaaaa" />
+                <a href="<{$mem.image_id|storager:''}>">
+                <img src="<{$mem.image_id|storager:'s'}>" width="88" height="88" style="padding-top:10px;"/></a>
+              <{/if}>
+            </span>
+        <li class="form-item">
+            <span style="padding-left: 200px"> <{button type="submit"   label="提交" rel="_request"}></span>
+        </li>
+      </ul>
+      </div>
+    </form>
+<script type="text/javascript">
+   function checkAddForm()
+    {
+      // alert("网店/SNS信息不能为空，请填写！");
+      // return false;
+    }
+</script>

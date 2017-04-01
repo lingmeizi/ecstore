@@ -1,0 +1,30 @@
+<div class="full-screen">
+    <header>
+    <div class="a-bar">
+        <a href="javascript:history.back()" class="a-back">
+            <i class="arr left"></i>
+            返回
+        </a>
+        <div class="a-name">
+           我的会员
+        </div>
+    </div>
+    </header>
+    <div class="address">
+        <{if !$my_members}>
+            <div>暂无会员</div>
+        <{else if}>
+              <{foreach from=$my_members item=my_member name=my_members key="key"}>
+            <div class="item">
+                <p>
+                    用户名：<{$my_member.username|escape:'html'}> <br />
+                    邮箱:<{$my_member.email|escape:'html'}><br />
+                    电话：<{$my_member.mobile|escape:'html'}><br />
+                    注册时间：<{$my_member.regtime}>
+                </p>
+            </div>
+            <{/foreach}>
+        <{/if}>
+    </div>
+</div>
+<{wap_pagers data=$pager}>

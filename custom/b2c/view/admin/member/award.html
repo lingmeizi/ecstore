@@ -1,0 +1,61 @@
+<form method="POST" action="index.php?app=b2c&ctl=admin_member_award&act=save" class="tableform" id="form_member_award">
+    <{input type='hidden' name='member_award_id' value=$award.member_award_id}>
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" >
+     <tr>
+      <th><em class="c-red">*</em><{t}>起始金额：<{/t}></th>
+      <td><{input type="text" name="start_money" size="20" vtype="required" value=$award.start_money}><span class="notice-inline"></span></td>
+    </tr>
+    <tr>
+      <th><em class="c-red">*</em><{t}>最高金额：<{/t}></th>
+      <td><{input type="text" name="end_money" size="20" vtype="required" value=$award.end_money}><span class="notice-inline"><{t}>无上限则写0<{/t}></span></td>
+    </tr>
+    <tr>
+      <th><em class="c-red">*</em><{t}>奖励折扣率：<{/t}></th>
+      <td><{input type="text" name="award_discount" size="20" vtype="required" value=$award.award_discount}><span class="notice-inline"><{t}>佣金比例0.1表示为10%，填写小数<{/t}></span></td>
+    </tr>
+</table>
+
+</div>
+</form>
+
+     <div class="table-action">
+	<{button type="button" label=$___b2c="保存"|t:'b2c' id="member_award-form-submit"}>
+     </div>
+
+<script>
+(function(){
+	var _form = $('form_member_award');
+	var btn =$('member_award-form-submit');
+	var finder = finderGroup['<{$env.get._finder.finder_id}>'];
+
+	_form.store('target',{
+		onSuccess:function(response){
+			var hash_res_obj = JSON.decode(response);
+
+			if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+			{
+				try{
+					var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+				}catch(e){}
+
+				if(_dialogIns)
+				{
+					_dialogIns.close();
+					window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+				}
+			}
+
+		}
+	});
+
+	    btn.addEvent('click',function(){
+		    _form.fireEvent('submit',{stop:$empty});
+		});
+
+})();
+
+
+</script>
+
+
